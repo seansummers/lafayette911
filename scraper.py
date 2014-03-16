@@ -66,7 +66,7 @@ for i in (x['id'] for x in incidentlist):
     try:
         scraperwiki.sqlite.execute('CREATE TABLE `reportedincidents` (`reportid` text, `incidentid` text, `firstseen` text)')
         scraperwiki.sqlite.commit()
-    except sqlite3.OperationalError:
+    except scraperwiki.sqlite3.OperationalError:
         pass
     ri['firstseen'] = dateutil.parser.parse(scraperwiki.sqlite.select('COALESCE(min(r.statusat),?) firstseen from reports r join reportedincidents ri on ri.reportid = r.id and ri.incidentid = ?', [report['statusat'].isoformat(),i])[0]['firstseen'])
     reportincidentlist.append(ri)
