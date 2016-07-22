@@ -5,13 +5,18 @@ import lxml.html
 import dateutil.parser
 import hashlib
 
-URL = 'http://67.32.159.27/webcad/webcad.asp' # redirect from http://67.32.159.27/ frame from http://lafayette911.org/
+URL = 'http://67.32.159.27/webcad4g.php/main/update'
 tz = pytz.timezone('CST6CDT') # site is for a specific geographical region
 RUNLIMIT = datetime.timedelta(seconds = 45) # don't run more than this often
 scrapeat = datetime.datetime.now(tz) # instance time
 
-lastrun = scraperwiki.sqlite.get_var('lastrun')
-lastrun = dateutil.parser.parse(lastrun) if lastrun is not None else tz.localize(datetime.datetime.combine(datetime.date.today(),datetime.time()))
+
+try:
+    __ = scraperwiki.sqlite.get_var('lastrun')
+    lastrun = dateutil.parser.parse(__)
+except AttributeError:
+    lastrun = tz.localize(datetime.datetime.combine(datetime.date.today(),datetime.time()))
+
 sincelastrun = scrapeat - lastrun
 
 print 'last run ' + str(sincelastrun) + ' ago... ',
