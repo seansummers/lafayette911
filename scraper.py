@@ -30,7 +30,7 @@ else:
 html = scraperwiki.scrape(URL)
 root = lxml.html.fromstring(html)
 
-statusat = root.cssselect('h4 center')[0].text.strip()
+statusat = root.cssselect('center small')[0].text.strip()
 statusat = tz.localize(dateutil.parser.parse(statusat))
 
 report = {
